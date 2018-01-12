@@ -19,6 +19,9 @@ public class HackTest {
         String imgsSrc = new File(root , "imgs/input").getAbsolutePath();
         String imgsDesc =  new File(root , "imgs/output").getAbsolutePath();
         File srcDir = new File(imgsSrc);
+        if(!srcDir.exists()){
+            srcDir.mkdirs();
+        }
         System.out.println(srcDir);
         MyPosFinder myPosFinder = new MyPosFinder();
         NextCenterFinder nextCenterFinder = new NextCenterFinder();
