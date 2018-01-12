@@ -2,6 +2,7 @@ package com.skyline.wxjumphack;
 
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 import java.util.Random;
 
 /**
@@ -38,10 +39,7 @@ public class Hack {
                 if (file.exists()) {
                     file.deleteOnExit();
                 }
-                Process process = Runtime.getRuntime().exec(ADB_PATH + " shell /system/bin/screencap -p /sdcard/screenshot.png");
-                process.waitFor();
-                process = Runtime.getRuntime().exec(ADB_PATH + " pull /sdcard/screenshot.png " + file.getAbsolutePath());
-                process.waitFor();
+                getScreen(file);
 
                 System.out.println("screenshot, file: " + file.getAbsolutePath());
                 BufferedImage image = ImgLoader.load(file.getAbsolutePath());
@@ -98,6 +96,16 @@ public class Hack {
 
         }
         System.out.println("centerHit: " + centerHit + ", total: " + total);
+    }
+
+    private static void getScreen(File file) throws IOException, InterruptedException {
+        while (!file.exists()){
+            Process process = Runtime.getRuntime().exec(ADB_PATH + " shell /system/bin/screencap -p /sdcard/screenshot.png");
+            process.waitFor();
+            process = Runtime.getRuntime().exec(ADB_PATH + " pull /sdcard/screenshot.png " + file.getAbsolutePath());
+            process.waitFor();
+        }
+
     }
 
 }
