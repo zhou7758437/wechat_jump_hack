@@ -2,7 +2,6 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/wechat_jump_hack.iml" filepath="$PROJECT_DIR$/wechat_jump_hack.iml" />
       <module fileurl="file://$PROJECT_DIR$/weixin-jump.iml" filepath="$PROJECT_DIR$/weixin-jump.iml" />
     </modules>
   </component>

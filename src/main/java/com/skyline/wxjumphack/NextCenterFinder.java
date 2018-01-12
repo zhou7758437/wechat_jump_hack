@@ -22,6 +22,8 @@ public class NextCenterFinder {
             return null;
         }
 
+        int topX=-1,topY=-1;
+
         int width = image.getWidth();
         int height = image.getHeight();
         int pixel = image.getRGB(0, 200);
@@ -74,6 +76,8 @@ public class NextCenterFinder {
                     ret[0] = i;
                     ret[1] = j;
                     System.out.println("top, x: " + i + ", y: " + j);
+                    topX=i;
+                    topY=j;
                     for (int k = 0; k < 5; k++) {
                         pixel = image.getRGB(i, j + k);
                         targetR += (pixel & 0xff0000) >> 16;
@@ -156,12 +160,49 @@ public class NextCenterFinder {
             }
         }
 
+        double llen=length(topX,topY,ret[2] ,ret[3]);
+        double rlen=length(topX,topY,ret[4] ,ret[5]);
+        double diff=Math.abs(llen-rlen);
+        if(diff>=50){
+            if(llen>rlen){
+                resolve(topX,topY,llen,4,5,ret);
+            }else{
+                resolve(topX,topY,rlen,2,3,ret);
+            }
+        }
+        System.out.println("++++++len-diff: "+diff);
         System.out.println("left, x: " + ret[2] + ", y: " + ret[3]);
         System.out.println("right, x: " + ret[4] + ", y: " + ret[5]);
 
         return ret;
     }
 
+    private void resolve(int topX, int topY, double llen, int i, int j, int[] ret) {
+        int xn=ret[i];
+        int yn=ret[j];
+        double k=1.0*(yn-topY)/(xn-topX);
+        double b=yn-k*xn;
+        double l=0;
+        int x=xn,y=yn;
+        while (l<llen){
+            if(k<0){
+                x--;
+            }else {
+                x++;
+            }
+            y=(int)(k*x+b);
+            l=length(topX,topY,x,y);
+        }
+        ret[i]=x;
+        ret[j]=y;
+    }
+
+
+    double length(int x1,int y1,int x2,int y2){
+        int d1=(x1-x2);
+        int d2=y2-y1;
+        return Math.sqrt(d1*d1+d2*d2);
+    }
     public static int[] buildArray(int i, int j) {
         int[] ret = {i, j};
         return ret;

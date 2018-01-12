@@ -4,12 +4,14 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Random;
+import java.util.UUID;
 
 /**
  * Created by chenliang on 2018/1/1.
  */
 public class Hack {
 
+   public static final String root = "d:\\Users\\zh_zhou\\Desktop\\jump";
 
     static final String ADB_PATH = "adb";
 
@@ -21,7 +23,7 @@ public class Hack {
     private static Random RANDOM = new Random();
 
     public static void main(String... strings) {
-        String root = Hack.class.getResource("/").getPath();
+
         System.out.println("root: " + root);
         File srcDir = new File(root, "imgs/input");
         srcDir.mkdirs();
@@ -35,7 +37,7 @@ public class Hack {
         for (int i = 0; i < 5000; i++) {
             try {
                 total++;
-                File file = new File(srcDir, i + ".png");
+                File file = new File(srcDir, i + "_"+UUID.randomUUID().toString().substring(0,10)+ ".png");
                 if (file.exists()) {
                     file.deleteOnExit();
                 }
@@ -89,7 +91,7 @@ public class Hack {
             }
             try {
                 // sleep 随机时间，防止上传不了成绩
-                Thread.sleep(4_000 + RANDOM.nextInt(3000));
+                Thread.sleep(1_000 + RANDOM.nextInt(3000));
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }

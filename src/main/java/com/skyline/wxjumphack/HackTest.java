@@ -5,10 +5,6 @@ import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayDeque;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Queue;
 
 /**
  * Created by chenliang on 2018/1/1.
@@ -18,10 +14,10 @@ public class HackTest {
 
     public static void main(String... strings) throws IOException {
         HackTest t = new HackTest();
-        String root = t.getClass().getResource("/").getPath();
+        String root = Hack.root;
         System.out.println("root: " + root);
-        String imgsSrc = root + "imgs/input";
-        String imgsDesc = root + "imgs/output";
+        String imgsSrc = new File(root , "imgs/input").getAbsolutePath();
+        String imgsDesc =  new File(root , "imgs/output").getAbsolutePath();
         File srcDir = new File(imgsSrc);
         System.out.println(srcDir);
         MyPosFinder myPosFinder = new MyPosFinder();
